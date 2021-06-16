@@ -1,5 +1,6 @@
-const Weather = require('./data/weather.json');
+const weatherData = require('./data/weather.json');
 // in our servers, we use require instead of import
+
 const express = require('express');
 const app = express();
 // use dotenv to access our .env file
@@ -19,7 +20,7 @@ response.send('working')
 
 })
 
-import Weather from "./data/weather.json";
+
 
 
 
@@ -47,7 +48,7 @@ const getForecast = () => {
 
 
 
-const weatherData = require('./data/weather.json');
+
 
 console.log('port is ' + PORT);
 // specify what routes our server should be listening for
@@ -56,7 +57,20 @@ app.get('/weather', (request, response) => {
   response.send('hello from the server!');
   let lat = request.query.lat;
   let lon = request.query.lon;
-  let searchQuery = request.query.searchQuery;
+  let searchQuery = req.query.searchQuery;
+
+  let cityWeatherData = weatherData.find(city=>city.city_name === searchQuery);
+
+  if (cityWeatherData === undefined) {
+    response.status(400).send('Unsupported city');
+  }
+  else{
+    let cityDataPretty = cityWeatherData.datata.map(obj => new Forecast(obj.datetime, `Low of ${obj.low_temp}, high of ${obj.low_temp}, high of ${obj.max_temp} with ${obj.weather.description.toLowerCase()}`));
+    response.send(cityDataPretty);
+  }
+
+
+
 });
 
 // put this LAST, with its crazy wildcard matching
