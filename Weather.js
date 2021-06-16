@@ -1,3 +1,4 @@
+const Weather = require('./data/weather.json');
 // in our servers, we use require instead of import
 const express = require('express');
 const app = express();
@@ -18,36 +19,45 @@ response.send('working')
 
 })
 
+import Weather from "./data/weather.json";
 
 
-// const weatherData = require('./weather.json');
 
-// console.log('port is ' + PORT);
-// // specify what routes our server should be listening for
-// app.get('/weather', (request, response) => {
-//   // when we get that request, send back a response
-//   response.send('hello from the server!');
-//   let lat = request.query.lat;
-//   let lon = request.query.lon;
-//   let searchQuery = request.query.searchQuery;
-// });
-// app.get('/potato', (request, response) => {
-//   // when we get that request, send back a response
-//   response.send('potatoes are delicious');
-// });
-// app.get('/sayHello', (request, response) => {
-//   // query parameters allow us to send extra information to the backend
-//   // we access query params using request.query
-//   // in the URL, this looks like localhost:3001/sayHello?name=Michelle
-//   let name = request.query.name;
-//   response.send(`Hello, ${name}!`);
-// });
+class Forecast {
 
-// app.get('/restaurants', (request, response)=> {
-//   // get the info from the restaurants file & send it back
-//   // restaurant data is require'd earlier in this file
-//   response.send(weatherData.filter(restaurant => restaurant.locality.toLowerCase().includes(request.query.location.toLowerCase())));
-// });
+ constructor(description,date){
+
+    
+ this.date=date;
+ this.description=description;
+
+  }
+
+}
+
+const getForecast = () => {
+    weatherData.map(i => {
+
+      new Forecast (i.description, i.date);
+
+
+    });
+};  
+
+
+
+
+const weatherData = require('./data/weather.json');
+
+console.log('port is ' + PORT);
+// specify what routes our server should be listening for
+app.get('/weather', (request, response) => {
+  // when we get that request, send back a response
+  response.send('hello from the server!');
+  let lat = request.query.lat;
+  let lon = request.query.lon;
+  let searchQuery = request.query.searchQuery;
+});
 
 // put this LAST, with its crazy wildcard matching
 app.get('*', (request, response) => {
