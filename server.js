@@ -8,7 +8,7 @@ require('dotenv').config();
 // allow the frontend to access data from the backend
 const cors = require('cors');
 app.use(cors());
-
+app.use(express.json())
 const PORT = process.env.PORT;
 
 // -----------------------------------
@@ -26,7 +26,7 @@ response.send('working')
 
 class Forecast {
 
- constructor(description,date){
+ constructor(date,description){
 
     
  this.date=date;
@@ -36,17 +36,6 @@ class Forecast {
 
 }
 
-const getForecast = () => {
-    weatherData.map(i => {
-
-      new Forecast (i.description, i.date);
-
-
-    });
-};  
-
-
-
 
 
 
@@ -54,18 +43,17 @@ console.log('port is ' + PORT);
 // specify what routes our server should be listening for
 app.get('/weather', (request, response) => {
   // when we get that request, send back a response
-  response.send('hello from the server!');
   let lat = request.query.lat;
   let lon = request.query.lon;
-  let searchQuery = req.query.searchQuery;
-
+  let searchQuery = request.query.searchQuery;
+  console.log(searchQuery)
   let cityWeatherData = weatherData.find(city=>city.city_name === searchQuery);
-
+  console.log("bananas " ,cityWeatherData);
   if (cityWeatherData === undefined) {
     response.status(400).send('Unsupported city');
   }
   else{
-    let cityDataPretty = cityWeatherData.datata.map(obj => new Forecast(obj.datetime, `Low of ${obj.low_temp}, high of ${obj.low_temp}, high of ${obj.max_temp} with ${obj.weather.description.toLowerCase()}`));
+    let cityDataPretty = cityWeatherData.data.map(obj => new Forecast(obj.datetime, `Low of ${obj.low_temp}, high of ${obj.low_temp}, high of ${obj.max_temp} with ${obj.weather.description.toLowerCase()}`));
     response.send(cityDataPretty);
   }
 

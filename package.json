@@ -2,10 +2,10 @@
   "name": "city-explorer-api",
   "version": "1.0.0",
   "description": "city-explorer-server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Weather.js"
+    "start": "node server.js"
 
   },
   "repository": {
