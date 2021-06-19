@@ -1,4 +1,6 @@
 const weatherData = require('./data/weather.json');
+const Forecast = require('./modules/Forecast');
+const Movie = require('./modules/Movie');
 // in our servers, we use require instead of import
 const axios = require('axios');
 const express = require('express');
@@ -22,35 +24,76 @@ app.get('/', (request, response) => {
 
 })
 
-class Movie {
-
-  constructor(title,release_Date) {
 
 
-    this.title = title;
-    this.release_Date = release_Date;
-  }
-
-}
-
-
-class Forecast {
-
-  constructor(date, description) {
-
-
-    this.date = date;
-    this.description = description;
-
-  }
-
-}
 
 
 
 
 console.log('port is ' + PORT);
 // specify what routes our server should be listening for
+
+
+// 'use strict';
+
+// let cache = require('./modules/cache.js');
+
+// module.exports = getWeather;
+
+// function getWeather(latitude, longitude) {
+//   const key = 'weather-' + latitude + longitude;
+//   const url = `http://api.weatherbit.io/v2.0/forecast/daily/?key=${WEATHER_API_KEY}&lang=en&lat=${lat}&lon=${lon}&days=5`;
+
+//   if (cache[key] && (Date.now() - cache[key].timestamp < 50000)) {
+//     console.log('Cache hit');
+// response.json
+//   } else {
+//     console.log('Cache miss');
+//     cache[key] = {};
+//     cache[key].timestamp = Date.now();
+//     cache[key].data = axios.get(url)
+//     .then(response => parseWeather(response.body));
+//   }
+  
+//   return cache[key].data;
+// }
+
+// function parseWeather(weatherData) {
+//   try {
+//     const weatherSummaries = weatherData.data.map(day => {
+//       return new Weather(day);
+//     });
+//     return Promise.resolve(weatherSummaries);
+//   } catch (e) {
+//     return Promise.reject(e);
+//   }
+// }
+
+// class Weather {
+//   constructor(day) {
+//     this.forecast = day.weather.description;
+//     this.time = day.datetime;
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get('/weather', async (request, response) => {
   // when we get that request, send back a response
   let lat = request.query.lat;
@@ -64,7 +107,7 @@ app.get('/weather', async (request, response) => {
       response.status(400).send('Unsupported city');
     }
     else {
-    
+    console.log(Forecast)
       let cityDataPretty = cityWeatherData.data.data.map(obj => new Forecast(obj.datetime, `Low of ${obj.low_temp}, high of ${obj.low_temp}, high of ${obj.max_temp} with ${obj.weather.description.toLowerCase()}`));
       
       response.send(cityDataPretty);
@@ -87,7 +130,7 @@ app.get('/movie', async (request, response) => {
     }
     else {
       console.log(cityMovieData.data.data)
-      let cityMoviePretty = cityMovieData.data.results.map(obj => new Movie(obj.title,`Movies with: ${obj.release_Date}`));
+      let cityMoviePretty = cityMovieData.data.results.map(obj => new Movie(obj.title,`Movies with: ${obj.release_date}`));
       console.log(cityMoviePretty);
       response.send(cityMoviePretty);
 
@@ -102,6 +145,29 @@ app.get('/movie', async (request, response) => {
 app.get('*', (request, response) => {
   response.status(404).send('Sorry, route not found');
 });
+
+
+
+// require('dotenv');
+// const express = require('express');
+// const cors = require('cors');
+
+// const weather = require('./modules/weather.js');
+// const app = express();
+
+// app.get('/weather', weatherHandler);
+
+// function weatherHandler(request, response) {
+//   let { lat, lon } = request.query;
+//   weather(lat, lon)
+//   .then(summaries => response.send(summaries))
+//   .catch((error) => {
+//     console.error(error);
+//     response.status(200).send('Sorry. Something went wrong!')
+//   });
+// }  
+
+//app.listen(process.env.PORT, () => console.log(`Server up on ${process.env.PORT}`));
 
 // tell our server to start listening for requests
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
