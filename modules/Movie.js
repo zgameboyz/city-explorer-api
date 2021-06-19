@@ -1,10 +1,10 @@
 class Movie {
 
-  constructor(title,release_Date) {
+  constructor(title,release_date) {
 
 
     this.title = title;
-    this.release_Date = release_Date;
+    this.release_date = release_date;
   }
 
 }

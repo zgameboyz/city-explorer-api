@@ -46,6 +46,7 @@ console.log('port is ' + PORT);
 
 //   if (cache[key] && (Date.now() - cache[key].timestamp < 50000)) {
 //     console.log('Cache hit');
+// response.json
 //   } else {
 //     console.log('Cache miss');
 //     cache[key] = {};
@@ -129,7 +130,7 @@ app.get('/movie', async (request, response) => {
     }
     else {
       console.log(cityMovieData.data.data)
-      let cityMoviePretty = cityMovieData.data.results.map(obj => new Movie(obj.title,`Movies with: ${obj.release_Date}`));
+      let cityMoviePretty = cityMovieData.data.results.map(obj => new Movie(obj.title,`Movies with: ${obj.release_date}`));
       console.log(cityMoviePretty);
       response.send(cityMoviePretty);
 
