@@ -1,7 +1,7 @@
 # City-Explorer-Api
 
 **Author**: Joel Connell
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.0.5 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 This program will allow you to search a city and find a map of it and things to do in the city.
